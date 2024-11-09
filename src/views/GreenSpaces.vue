@@ -2,6 +2,6 @@
 
 <template>
   <main>
-    <div>home</div>
+    <div>Green space</div>
   </main>
 </template>
