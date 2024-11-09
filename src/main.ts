@@ -8,6 +8,10 @@ import router from './router'
 
 import './assets/main.css'
 
+import Tooltip from 'primevue/tooltip'
+
+import { i18n } from './i18n'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -17,5 +21,6 @@ app.use(PrimeVue, {
     preset: Aura,
   },
 })
-
+app.use(i18n)
+app.directive('tooltip', Tooltip)
 app.mount('#app')

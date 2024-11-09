@@ -2,7 +2,7 @@
 import Button from 'primevue/button'
 import { IconNames } from '@/icons/IconNames'
 import type { PropType } from 'vue'
-import type { ButtonVariant } from '.';
+import type { ButtonSeverity } from '.'
 
 const props = defineProps({
   title: {
@@ -25,8 +25,8 @@ const props = defineProps({
     type: String as PropType<IconNames>,
     required: false,
   },
-  variant: {
-    type: String as PropType<ButtonVariant>,
+  severity: {
+    type: String as PropType<ButtonSeverity>,
     required: false,
     default: 'contrast',
   },
@@ -35,7 +35,10 @@ const props = defineProps({
 
 <template>
   <Button
-    :severity="variant"
+    v-tooltip.right="{
+      value: tooltipText,
+    }"
+    :severity="severity"
     :icon="iconName"
     :disabled="disabled"
     @click="props.click"

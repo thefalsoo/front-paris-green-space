@@ -5,9 +5,9 @@ export enum RouteNames {
 }
 
 export const routesConfig = {
-  [RouteNames.HOME]: { path: '/', title: 'Accueil' },
-  [RouteNames.GREEN_SPACES]: { path: '/green-spaces', title: 'Dashboard' },
-  [RouteNames.USER_PARAMETERS]: { path: '/user-parameters', title: 'Paramètres utilisateurs' },
+  [RouteNames.HOME]: { path: '/', titleKey: 'navigation.home' },
+  [RouteNames.GREEN_SPACES]: { path: '/green-spaces', titleKey: 'navigation.greenSpaces' },
+  [RouteNames.USER_PARAMETERS]: { path: '/user-parameters', titleKey: 'navigation.userParameters' },
 }
 
 export const RoutePaths: Record<RouteNames, string> = {
@@ -17,7 +17,7 @@ export const RoutePaths: Record<RouteNames, string> = {
 }
 
 export const RouteTitles: Record<RouteNames, string> = {
-  [RouteNames.HOME]: routesConfig[RouteNames.HOME].title,
-  [RouteNames.GREEN_SPACES]: routesConfig[RouteNames.GREEN_SPACES].title,
-  [RouteNames.USER_PARAMETERS]: routesConfig[RouteNames.USER_PARAMETERS].title,
+  [RouteNames.HOME]: routesConfig[RouteNames.HOME].titleKey,
+  [RouteNames.GREEN_SPACES]: routesConfig[RouteNames.GREEN_SPACES].titleKey,
+  [RouteNames.USER_PARAMETERS]: routesConfig[RouteNames.USER_PARAMETERS].titleKey,
 }

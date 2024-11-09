@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 import GButton from '../GButton/GButton.vue'
 import { menuItems } from '.'
-import { ButtonVariant } from '../GButton'
+import { ButtonSeverity, ButtonVariant } from '../GButton'
 
 const router = useRouter()
 
@@ -16,12 +16,13 @@ const handleNavigation = (path: string) => {
     <div v-for="item in menuItems" :key="item.path">
       <GButton
         :click="() => handleNavigation(item.path)"
-        :tooltip="item.title"
+        :tooltipText="$t(item.titleKey)"
         :iconName="item.iconName"
-        :variant="
+        :variant="ButtonVariant.RAISED"
+        :severity="
           router.currentRoute.value.path === item.path
-            ? ButtonVariant.SECONDARY
-            : ButtonVariant.CONTRAST
+            ? ButtonSeverity.SECONDARY
+            : ButtonSeverity.CONTRAST
         "
         class="w-full"
       />
