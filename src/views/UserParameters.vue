@@ -2,6 +2,6 @@
 
 <template>
   <main>
-    <div>home</div>
+    <div>Parameters</div>
   </main>
 </template>
