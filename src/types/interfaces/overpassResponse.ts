@@ -1,12 +1,8 @@
+import type { OverpassElementType } from '../enums/overpassResponse'
+
 export interface Geometry {
   lat: number
   lon: number
-}
-
-export enum OverpassElementType {
-  NODE = 'node',
-  WAY = 'way',
-  RELATION = 'relation',
 }
 
 export interface OverpassElement {

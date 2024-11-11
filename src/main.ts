@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 
 import App from './App.vue'
-import router from './router'
+import router from './router/router'
 
 import './assets/main.css'
 import 'leaflet/dist/leaflet.css'
