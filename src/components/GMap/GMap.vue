@@ -4,9 +4,9 @@ import L from 'leaflet'
 import '@asymmetrik/leaflet-d3'
 import type { PropType } from 'vue'
 import type { FeatureCollection, Position } from 'geojson'
-import { OverpassElementType } from '@/types/overpassResponse'
 import { formatGeoJsonToPointsTab } from '@/utils/formatGeoJson'
 import { options } from '.'
+import { OverpassElementType } from '@/types/enums/overpassResponse'
 
 const props = defineProps({
   geoJsonData: {
@@ -21,7 +21,7 @@ const props = defineProps({
 
 const mapContainer = ref<HTMLElement | null>(null)
 let map: L.Map | null = null
-
+let currentLayer: L.LayerGroup | null = null
 // Fonction d'initialisation de la carte
 const initMap = async () => {
   if (!mapContainer.value) return
@@ -39,27 +39,26 @@ const initMap = async () => {
 
 // Fonction pour ajouter une couche GeoJSON avec des hexbins
 const addGeoJsonLayer = (geoJsonData: FeatureCollection) => {
+  if (currentLayer) {
+    map?.removeLayer(currentLayer)
+  }
   switch (props.overpassElementType) {
     case OverpassElementType.NODE: {
       const data: Position[] = formatGeoJsonToPointsTab(geoJsonData)
       const hexLayer = L.hexbinLayer(options).addTo(map!)
       hexLayer.data(data)
+      currentLayer = hexLayer
       break
     }
 
     case OverpassElementType.WAY: {
-      L.geoJSON(geoJsonData).addTo(map!)
-      break
-    }
-
-    case OverpassElementType.RELATION: {
-      L.geoJSON(geoJsonData).addTo(map!)
+      const geoJsonLayer = L.geoJSON(geoJsonData).addTo(map!)
+      currentLayer = geoJsonLayer
       break
     }
 
     default: {
       console.warn('Error')
-      L.geoJSON(geoJsonData).addTo(map!)
       break
     }
   }
@@ -69,6 +68,7 @@ watch(
   () => props.geoJsonData,
   (newGeoJsonData) => {
     if (newGeoJsonData && map) {
+      initMap()
       addGeoJsonLayer(newGeoJsonData)
     }
   },

@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import { ref, type PropType } from 'vue'
+import Select from 'primevue/select'
+import type { SelectItem } from '@/types/interfaces/gSelect'
+import GIcon from '../GIcon/GIcon.vue'
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: false,
+  },
+  options: {
+    type: Array as PropType<SelectItem[]>,
+    required: true,
+  },
+  loading: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  placeholder: {
+    type: String,
+    required: false,
+    default: 'Sélectionner une option',
+  },
+  optionLabel: {
+    type: String,
+    required: false,
+    default: 'label',
+  },
+  handleChange: {
+    type: Function as PropType<(params: SelectItem) => void>,
+    required: true,
+  },
+})
+
+const selectedValue = ref<SelectItem | null>(null)
+
+function handleChangeSelectValue() {
+  if (selectedValue.value) {
+    props.handleChange(selectedValue.value)
+  }
+}
+</script>
+
+<template>
+  <div>
+    <Select
+      v-model="selectedValue"
+      :options="props.options"
+      :optionLabel="props.optionLabel"
+      :placeholder="props.placeholder"
+      :loading="props.loading"
+      :disabled="props.loading || props.disabled"
+      class="w-full"
+      variant="filled"
+      size="small"
+      @change="handleChangeSelectValue"
+    >
+      <template #option="options">
+        <div class="flex items-center">
+          <div v-if="options.option.iconName" class="mr-2">
+            <GIcon :name="options.option.iconName" />
+          </div>
+          <div>{{ options.option.label }}</div>
+        </div>
+      </template>
+    </Select>
+  </div>
+</template>
+
+<style scoped></style>

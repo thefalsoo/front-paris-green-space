@@ -1,4 +1,4 @@
-import type { OverpassResponse } from '@/types/overpassResponse'
+import type { OverpassResponse } from '@/types/interfaces/overpassResponse'
 import axios from 'axios'
 
 const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'

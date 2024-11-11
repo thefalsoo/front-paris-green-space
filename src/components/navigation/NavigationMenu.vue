@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 import GButton from '../GButton/GButton.vue'
 import { menuItems } from '.'
-import { ButtonSeverity, ButtonVariant } from '../GButton'
+import { ButtonSeverity, ButtonVariant } from '../../types/enums/gButton'
 
 const router = useRouter()
 

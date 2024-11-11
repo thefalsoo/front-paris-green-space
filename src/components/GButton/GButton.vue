@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
-import { IconNames } from '@/icons/IconNames'
 import type { PropType } from 'vue'
-import type { ButtonSeverity } from '.'
+import type { ButtonSeverity } from '../../types/enums/gButton'
+import type { IconNamesPrime } from '@/types/enums/iconNames'
 
 const props = defineProps({
   title: {
@@ -22,7 +22,7 @@ const props = defineProps({
     required: false,
   },
   iconName: {
-    type: String as PropType<IconNames>,
+    type: String as PropType<IconNamesPrime>,
     required: false,
   },
   severity: {

@@ -1,8 +1,5 @@
-import {
-  OverpassElementType,
-  type OverpassElement,
-  type OverpassResponse,
-} from '@/types/overpassResponse'
+import { OverpassElementType } from '@/types/enums/overpassResponse'
+import { type OverpassElement, type OverpassResponse } from '@/types/interfaces/overpassResponse'
 import type { Feature, FeatureCollection, Geometry, Point } from 'geojson'
 
 export const formatGreenSpacesOverPassToGeoJson = (

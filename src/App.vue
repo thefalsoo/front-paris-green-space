@@ -9,7 +9,7 @@ import NavigationMenu from './components/navigation/NavigationMenu.vue'
       <NavigationMenu />
     </aside>
 
-    <main class="flex-1 p-6 bg-black">
+    <main class="flex-1 p-6">
       <RouterView />
     </main>
   </div>
