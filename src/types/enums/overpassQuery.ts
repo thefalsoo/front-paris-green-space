@@ -17,4 +17,5 @@ export enum LanduseType {
 
 export enum NaturalType {
   WOOD = 'wood',
+  NATURE_RESERVE = 'nature_reserve',
 }
