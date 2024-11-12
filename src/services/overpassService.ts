@@ -1,4 +1,6 @@
+import type { QueryParams } from '@/types/interfaces/overpassQuery'
 import type { OverpassResponse } from '@/types/interfaces/overpassResponse'
+import { generateOverpassQuery } from '@/utils/generateOverpassQuery'
 import axios from 'axios'
 
 const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'
@@ -6,20 +8,8 @@ const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'
 /**
  * Requête Overpass pour obtenir les espaces verts à Paris.
  */
-export const getGreenSpaces = async (): Promise<OverpassResponse> => {
-  const query = `
-    [out:json];
-    area["wikidata"="Q90"]->.searchArea;
-    (
-      way["leisure"~"park|garden|pitch|playground"](area.searchArea);
-      relation["leisure"~"park|garden|pitch|playground"](area.searchArea);
-      way["landuse"="forest"](area.searchArea);
-      relation["landuse"="forest"](area.searchArea);
-      way["natural"="wood"](area.searchArea);
-      relation["natural"="wood"](area.searchArea);
-    );
-    out geom;
-  `
+export const getGreenSpaces = async (params: QueryParams): Promise<OverpassResponse> => {
+  const query = generateOverpassQuery(params)
 
   try {
     const response = await axios.post(OVERPASS_URL, `data=${encodeURIComponent(query)}`, {
