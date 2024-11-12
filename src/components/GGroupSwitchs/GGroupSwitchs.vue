@@ -20,7 +20,11 @@ const props = defineProps({
   },
   showLegend: {
     type: Boolean,
-    default: false, // Par défaut, la légende est désactivée
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    required: false,
   },
 })
 
@@ -35,7 +39,9 @@ watch(
 )
 
 function toggleSwitch(item: SwitchItems) {
-  item.checked = !item.checked
+  if (!props.loading) {
+    item.checked = !item.checked
+  }
 }
 </script>
 
@@ -46,7 +52,7 @@ function toggleSwitch(item: SwitchItems) {
       :key="options.value"
       class="flex items-center space-x-4 cursor-pointer"
     >
-      <ToggleSwitch v-model="options.checked" :id="options.value" />
+      <ToggleSwitch v-model="options.checked" :id="options.value" :disabled="props.loading" />
       <div class="flex items-center space-x-4" @click="toggleSwitch(options)">
         <div
           v-if="props.showLegend"

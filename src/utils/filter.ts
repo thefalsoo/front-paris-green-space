@@ -1,5 +1,5 @@
 import type { SwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
-import type { LeisureType, LanduseType, NaturalType } from '@/types/enums/overpassQuery'
+import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
 import type { QueryParams } from '@/types/interfaces/overpassQuery'
 
 export function generateQueryParamsFromFilters(item: SwitchItems[]): QueryParams {
@@ -11,11 +11,17 @@ export function generateQueryParamsFromFilters(item: SwitchItems[]): QueryParams
 
   item.forEach((switchItem) => {
     if (switchItem.checked) {
-      if (['park', 'garden', 'playground', 'pitch'].includes(switchItem.value)) {
+      if (
+        [LeisureType.PARK, LeisureType.GARDEN, LeisureType.PLAYGROUND, LeisureType.PITCH].includes(
+          switchItem.value as LeisureType,
+        )
+      ) {
         queryParams.leisureTypes.push(switchItem.value as LeisureType)
-      } else if (['forest', 'nature_reserve'].includes(switchItem.value)) {
+      } else if (
+        [LanduseType.FOREST, NaturalType.NATURE_RESERVE].includes(switchItem.value as LanduseType)
+      ) {
         queryParams.landuseTypes.push(switchItem.value as LanduseType)
-      } else if (['wood', 'botanical_garden'].includes(switchItem.value)) {
+      } else if ([NaturalType.WOOD].includes(switchItem.value as NaturalType)) {
         queryParams.naturalTypes.push(switchItem.value as NaturalType)
       }
     }

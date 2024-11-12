@@ -50,6 +50,7 @@ const props = defineProps({
       <GGroupSwitchs
         :items="props.filtersGreenSpaces"
         :show-legend="true"
+        :loading="props.loading"
         :handleChangeSwitchs="(item: SwitchItems[]) => props.handleChangeFiltersGreenSpaces(item)"
       />
     </div>

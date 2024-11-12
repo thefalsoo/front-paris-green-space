@@ -14,17 +14,35 @@ import IndicatorAndFilter from './IndicatorAndFilter.vue'
 import Card from 'primevue/card'
 import type { SwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
 import { generateQueryParamsFromFilters } from '@/utils/filter'
-import type { FiltersGreenSpacesItem } from '@/types/interfaces/filters'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesType'
+import AnalyticsBoard from './AnalyticsBoard.vue'
+import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
+import { GreenSpaceColor, GreenSpaceLabel } from '@/types/enums/greenSpaces'
 
-const filter: FiltersGreenSpacesItem[] = [
-  { label: 'Parc', value: 'park', checked: true, color: '#4CAF50' },
-  { label: 'Jardin', value: 'garden', checked: false, color: '#FF9800' },
-  { label: 'Aire de jeux', value: 'playground', checked: false, color: '#2196F3' },
-  { label: 'Forêt', value: 'forest', checked: false, color: '#8BC34A' },
-  { label: 'Bois', value: 'wood', checked: false, color: '#795548' },
-  { label: 'Réserve naturelle', value: 'nature_reserve', checked: false, color: '#009688' },
-  { label: 'Jardin botanique', value: 'botanical_garden', checked: false, color: '#9C27B0' },
+const greenSpacesItem: GreenSpacesItem[] = [
+  { labelKey: GreenSpaceLabel.PARK, value: LeisureType.PARK, color: GreenSpaceColor.PARK },
+  { labelKey: GreenSpaceLabel.GARDEN, value: LeisureType.GARDEN, color: GreenSpaceColor.GARDEN },
+  {
+    labelKey: GreenSpaceLabel.PLAYGROUND,
+    value: LeisureType.PLAYGROUND,
+    color: GreenSpaceColor.PLAYGROUND,
+  },
+  { labelKey: GreenSpaceLabel.PITCH, value: LeisureType.PITCH, color: GreenSpaceColor.PITCH },
+  { labelKey: GreenSpaceLabel.FOREST, value: LanduseType.FOREST, color: GreenSpaceColor.FOREST },
+  { labelKey: GreenSpaceLabel.WOOD, value: NaturalType.WOOD, color: GreenSpaceColor.WOOD },
+  {
+    labelKey: GreenSpaceLabel.NATURE_RESERVE,
+    value: NaturalType.NATURE_RESERVE,
+    color: GreenSpaceColor.NATURE_RESERVE,
+  },
 ]
+
+const filter: SwitchItems[] = greenSpacesItem.map((item) => ({
+  label: item.labelKey,
+  value: item.value,
+  checked: false,
+  color: item.color,
+}))
 
 const overpassResponse = ref<OverpassResponse | null>(null)
 const geoJson = ref<FeatureCollection | null>(null)
@@ -63,6 +81,7 @@ async function loadIndicatorData(indicatorValue: IndicatorValue) {
     } else if (indicatorValue === IndicatorValue.GREEN_SPACES) {
       const queryParams = generateQueryParamsFromFilters(filtersGreenSpaces.value)
       data = await getGreenSpaces(queryParams)
+
       geoJson.value = formatGreenSpacesOverPassToGeoJson(data)
     }
     overpassResponse.value = data
@@ -88,7 +107,11 @@ async function handleChangeFiltersGreenSpaces(item: SwitchItems[]) {
     selectIsLoading.value = true
     try {
       const data = await getGreenSpaces(queryParams)
+      console.log('data', data)
+
       geoJson.value = formatGreenSpacesOverPassToGeoJson(data)
+      console.log('geoJson', geoJson.value)
+
       overpassResponse.value = data
     } catch (error) {
       console.error('Erreur lors de la récupération des espaces verts :', error)
@@ -121,11 +144,19 @@ async function handleChangeFiltersGreenSpaces(item: SwitchItems[]) {
     <div class="flex flex-col w-5/6 h-full">
       <Card class="h-full">
         <template #content>
-          <MapContainer
-            :indicatorTitle="selectedIndicator?.title"
-            :geoJsonData="geoJson"
-            :overpassElementType="selectedIndicator?.overpassElementType"
-          />
+          <div class="flex flex-col">
+            <MapContainer
+              :indicatorTitle="selectedIndicator?.title"
+              :geoJsonData="geoJson"
+              :overpassElementType="selectedIndicator?.overpassElementType"
+            />
+            <AnalyticsBoard
+              :overpassData="overpassResponse"
+              :greenSpacesItem="greenSpacesItem"
+              :indicatorsTypeValue="selectedIndicator?.value"
+              :loading="selectIsLoading"
+            />
+          </div>
         </template>
       </Card>
     </div>
