@@ -1,8 +1,8 @@
 export enum IndicatorTitles {
   Trees = 'Détection des arbres',
-  Parks = 'Détection des parcs',
+  GREEN_SPACES = 'Détection des espaces verts',
 }
 export enum IndicatorValue {
   Trees = 'trees',
-  Parks = 'parks',
+  GREEN_SPACES = 'greenSpaces',
 }

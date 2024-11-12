@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import GreenSpaces from '@/views/GreenSpaces.vue'
+import GreenSpaces from '@/views/GreenSpaces/GreenSpacesView.vue'
 import UserParameters from '@/views/UserParameters.vue'
 import { RouteNames } from '@/types/enums/routes'
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import GButton from '../GButton/GButton.vue'
-import { menuItems } from '.'
 import { ButtonSeverity, ButtonVariant } from '../../types/enums/gButton'
+import { menuItems } from '.'
 
 const router = useRouter()
 
@@ -12,7 +12,7 @@ const handleNavigation = (path: string) => {
 </script>
 
 <template>
-  <div class="w-20 h-full bg-dark flex flex-col space-y-4 items-center pt-4">
+  <div class="w-20 h-full bg-dark flex flex-col space-y-4 items-center pt-32">
     <div v-for="item in menuItems" :key="item.path">
       <GButton
         :click="() => handleNavigation(item.path)"
