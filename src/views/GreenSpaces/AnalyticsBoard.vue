@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import GreenSpacesBarChart from '@/components/GreenSpacesBarChart.vue'
 import type { IndicatorValue } from '@/types/enums/indicators'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesType'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
 import type { OverpassResponse } from '@/types/interfaces/overpassResponse'
 import { type PropType } from 'vue'
 

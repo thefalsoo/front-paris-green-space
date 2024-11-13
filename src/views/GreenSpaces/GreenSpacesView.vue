@@ -14,7 +14,7 @@ import IndicatorAndFilter from './IndicatorAndFilter.vue'
 import Card from 'primevue/card'
 import type { SwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
 import { generateQueryParamsFromFilters } from '@/utils/filter'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesType'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
 import AnalyticsBoard from './AnalyticsBoard.vue'
 import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
 import { GreenSpaceColor, GreenSpaceLabel } from '@/types/enums/greenSpaces'
@@ -77,12 +77,14 @@ async function loadIndicatorData(indicatorValue: IndicatorValue) {
     let data: OverpassResponse | null = null
     if (indicatorValue === IndicatorValue.Trees) {
       data = await getTrees()
+      console.log('over pass ', data)
       geoJson.value = formatTreesToGeoJson(data)
+      console.log('geoJson 1', geoJson.value)
     } else if (indicatorValue === IndicatorValue.GREEN_SPACES) {
       const queryParams = generateQueryParamsFromFilters(filtersGreenSpaces.value)
       data = await getGreenSpaces(queryParams)
 
-      geoJson.value = formatGreenSpacesOverPassToGeoJson(data)
+      geoJson.value = formatGreenSpacesOverPassToGeoJson(data, greenSpacesItem)
     }
     overpassResponse.value = data
   } catch (error) {
@@ -107,11 +109,7 @@ async function handleChangeFiltersGreenSpaces(item: SwitchItems[]) {
     selectIsLoading.value = true
     try {
       const data = await getGreenSpaces(queryParams)
-      console.log('data', data)
-
-      geoJson.value = formatGreenSpacesOverPassToGeoJson(data)
-      console.log('geoJson', geoJson.value)
-
+      geoJson.value = formatGreenSpacesOverPassToGeoJson(data, greenSpacesItem)
       overpassResponse.value = data
     } catch (error) {
       console.error('Erreur lors de la récupération des espaces verts :', error)
@@ -146,6 +144,7 @@ async function handleChangeFiltersGreenSpaces(item: SwitchItems[]) {
         <template #content>
           <div class="flex flex-col">
             <MapContainer
+              :greenSpacesItem="greenSpacesItem"
               :indicatorTitle="selectedIndicator?.title"
               :geoJsonData="geoJson"
               :overpassElementType="selectedIndicator?.overpassElementType"

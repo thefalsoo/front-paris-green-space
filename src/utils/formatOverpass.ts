@@ -1,9 +1,11 @@
 import { OverpassElementType } from '@/types/enums/overpassResponse'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
 import { type OverpassElement, type OverpassResponse } from '@/types/interfaces/overpassResponse'
 import type { Feature, FeatureCollection, Geometry, Point } from 'geojson'
 
 export const formatGreenSpacesOverPassToGeoJson = (
   overPassData: OverpassResponse,
+  greenSpacesItem: GreenSpacesItem[],
 ): FeatureCollection => {
   const formattedGeoJson: FeatureCollection = {
     type: 'FeatureCollection',
@@ -14,6 +16,9 @@ export const formatGreenSpacesOverPassToGeoJson = (
           (element.type === OverpassElementType.WAY ||
             element.type === OverpassElementType.RELATION)
         ) {
+          const spaceType = element.tags?.leisure || element.tags?.landuse || element.tags?.natural
+          const greenSpaceItem = greenSpacesItem.find((item) => item.value === spaceType)
+
           return {
             type: 'Feature',
             geometry: {
@@ -25,7 +30,11 @@ export const formatGreenSpacesOverPassToGeoJson = (
                 ]),
               ],
             },
-            properties: element.tags || {},
+            properties: {
+              ...element.tags,
+              space_type: spaceType,
+              color: greenSpaceItem ? greenSpaceItem.color : '#000000',
+            },
           } as Feature<Geometry>
         }
         return null
