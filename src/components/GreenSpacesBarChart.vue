@@ -2,7 +2,7 @@
 import GBarChart from '@/components/GBarChart/GBarChart.vue'
 import type { IndicatorValue } from '@/types/enums/indicators'
 import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesType'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
 import type { OverpassElement, OverpassResponse } from '@/types/interfaces/overpassResponse'
 import { ref, type PropType, watch } from 'vue'
 

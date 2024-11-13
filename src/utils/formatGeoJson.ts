@@ -1,15 +1,19 @@
-import type { Feature, FeatureCollection, Point, Position } from 'geojson'
+import type { Feature, FeatureCollection, Point } from 'geojson'
 
-export const formatGeoJsonToPointsTab = (geoJsonData: FeatureCollection): Position[] => {
-  const data: Position[] = geoJsonData.features
+export type PointsTabWithFeature = [number, number, Feature]
+
+export const formatGeoJsonToPointsTabWithFeature = (
+  geoJsonData: FeatureCollection,
+): PointsTabWithFeature[] => {
+  const data: PointsTabWithFeature[] = geoJsonData.features
     .map((feature: Feature) => {
       if (feature.geometry?.type === 'Point') {
         const [lon, lat] = (feature.geometry as Point).coordinates
-        return [lon, lat] as Position
+        return [lon, lat, feature] as PointsTabWithFeature
       }
       return null
     })
-    .filter((point): point is Position => point !== null) // Utilisation d'un prédicat pour filtrer les positions valides
+    .filter((point): point is PointsTabWithFeature => point !== null)
 
   return data
 }
