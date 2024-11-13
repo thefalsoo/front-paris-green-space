@@ -2,7 +2,7 @@
 import { ref, defineProps, watch, type PropType } from 'vue'
 import ToggleSwitch from 'primevue/toggleswitch'
 
-export interface SwitchItems {
+export interface GSwitchItems {
   label: string
   value: string
   checked: boolean
@@ -11,11 +11,11 @@ export interface SwitchItems {
 
 const props = defineProps({
   items: {
-    type: Array as PropType<SwitchItems[]>,
+    type: Array as PropType<GSwitchItems[]>,
     required: true,
   },
   handleChangeSwitchs: {
-    type: Function as PropType<(params: SwitchItems[]) => void>,
+    type: Function as PropType<(params: GSwitchItems[]) => void>,
     required: true,
   },
   showLegend: {
@@ -28,7 +28,7 @@ const props = defineProps({
   },
 })
 
-const switchs = ref<SwitchItems[]>(props.items)
+const switchs = ref<GSwitchItems[]>(props.items)
 
 watch(
   switchs,
@@ -38,7 +38,7 @@ watch(
   { deep: true },
 )
 
-function toggleSwitch(item: SwitchItems) {
+function toggleSwitch(item: GSwitchItems) {
   if (!props.loading) {
     item.checked = !item.checked
   }

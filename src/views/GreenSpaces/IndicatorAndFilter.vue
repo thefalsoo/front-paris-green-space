@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { type PropType } from 'vue'
-import GSelect from '@/components/GSelect/GSelect.vue'
-import type { SelectItem } from '@/types/interfaces/gSelect'
-import { IndicatorValue } from '@/types/enums/indicators'
-import GGroupSwitchs, { type SwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
+import GSelect, { type GSelectItem } from '@/components/GSelect/GSelect.vue'
+import { IndicatorValue } from '@/types/enums/indicatorsEnums'
+import GGroupSwitchs, { type GSwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
+import type { IndicatorsType } from '@/types/interfaces/indicatorsInterfaces'
 
 const props = defineProps({
-  options: {
-    type: Array as PropType<SelectItem[]>,
+  optionsIndicators: {
+    type: Array as PropType<GSelectItem[]>,
+    required: true,
+  },
+  filtersGreenSpaces: {
+    type: Array as PropType<GSwitchItems[]>,
     required: true,
   },
   loading: {
@@ -15,20 +19,17 @@ const props = defineProps({
     required: false,
     default: false,
   },
-  indicatorsTypeValue: {
-    type: String as PropType<IndicatorValue>,
-    required: false,
-  },
-  handleChange: {
-    type: Function as PropType<(params: SelectItem) => void>,
+  selectedIndicator: {
+    type: Object as PropType<IndicatorsType | null>,
     required: true,
   },
-  filtersGreenSpaces: {
-    type: Array as PropType<SwitchItems[]>,
+  handleChangeIndicator: {
+    type: Function as PropType<(params: GSelectItem) => void>,
     required: true,
   },
+
   handleChangeFiltersGreenSpaces: {
-    type: Function as PropType<(params: SwitchItems[]) => void>,
+    type: Function as PropType<(params: GSwitchItems[]) => void>,
     required: true,
   },
 })
@@ -39,19 +40,20 @@ const props = defineProps({
     <div class="space-y-4">
       <p class="text-lg font-bold">Indicateurs</p>
       <GSelect
-        :options="props.options"
+        :options="props.optionsIndicators"
         placeholder="Sélectionner un indicateur"
         :loading="props.loading"
-        :handleChange="(item: SelectItem) => props.handleChange(item)"
+        :handleChange="handleChangeIndicator"
       />
     </div>
-    <div v-if="indicatorsTypeValue === IndicatorValue.GREEN_SPACES" class="space-y-4">
-      <p class="text-lg font-bold">Filtres</p>
+
+    <div v-if="selectedIndicator?.value === IndicatorValue.GREEN_SPACES" class="space-y-4">
+      <p class="text-lg font-bold">Filtres les espaces verts</p>
       <GGroupSwitchs
         :items="props.filtersGreenSpaces"
         :show-legend="true"
         :loading="props.loading"
-        :handleChangeSwitchs="(item: SwitchItems[]) => props.handleChangeFiltersGreenSpaces(item)"
+        :handleChangeSwitchs="props.handleChangeFiltersGreenSpaces"
       />
     </div>
   </div>

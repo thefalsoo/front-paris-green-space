@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue'
 import Select from 'primevue/select'
-import type { SelectItem } from '@/types/interfaces/gSelect'
 import GIcon from '../GIcon/GIcon.vue'
+import type { IconNamesMaterial } from '@/types/enums/iconNamesEnums'
+
+export interface GSelectItem {
+  label: string
+  value: string
+  iconName?: IconNamesMaterial
+  disabled?: boolean
+}
 
 const props = defineProps({
   title: {
@@ -10,7 +17,7 @@ const props = defineProps({
     required: false,
   },
   options: {
-    type: Array as PropType<SelectItem[]>,
+    type: Array as PropType<GSelectItem[]>,
     required: true,
   },
   loading: {
@@ -34,12 +41,12 @@ const props = defineProps({
     default: 'label',
   },
   handleChange: {
-    type: Function as PropType<(params: SelectItem) => void>,
+    type: Function as PropType<(params: GSelectItem) => void>,
     required: true,
   },
 })
 
-const selectedValue = ref<SelectItem | null>(null)
+const selectedValue = ref<GSelectItem | null>(null)
 
 function handleChangeSelectValue() {
   if (selectedValue.value) {

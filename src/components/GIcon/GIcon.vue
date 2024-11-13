@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconNamesMaterial } from '@/types/enums/iconNames'
+import { IconNamesMaterial } from '@/types/enums/iconNamesEnums'
 import { Icon } from '@iconify/vue'
 import type { PropType } from 'vue'
 

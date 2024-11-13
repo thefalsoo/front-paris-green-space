@@ -1,4 +1,4 @@
-import type { OverpassElementType } from '../enums/overpassResponse'
+import type { OverpassElementType } from '../enums/overpassResponseEnums'
 
 export interface Geometry {
   lat: number

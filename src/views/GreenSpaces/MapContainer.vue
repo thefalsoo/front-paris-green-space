@@ -1,30 +1,25 @@
 <script setup lang="ts">
 import GMap from '@/components/GMap/GMap.vue'
 import type { Feature, FeatureCollection } from 'geojson'
-import { OverpassElementType } from '@/types/enums/overpassResponse'
 import { ref, type PropType } from 'vue'
-import type { IndicatorTitles } from '@/types/enums/indicators'
-import { calculatePolygonArea } from '@/utils/area'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
-import type { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
-import type { GreenSpaceLabel } from '@/types/enums/greenSpaces'
+import { calculatePolygonArea } from '@/utils/areaUtility'
+import type { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQueryEnums'
+import type { GreenSpaceLabel } from '@/types/enums/greenSpacesEnums'
+import type { IndicatorsType } from '@/types/interfaces/indicatorsInterfaces'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesInterfaces'
 
 const props = defineProps({
   geoJsonData: {
     type: Object as PropType<FeatureCollection | null>,
     required: false,
   },
-  greenSpacesItem: {
-    type: Array as PropType<GreenSpacesItem[]>,
+  greenSpacesItems: {
+    type: Object as PropType<GreenSpacesItem[] | null>,
     required: true,
   },
-  indicatorTitle: {
-    type: String as PropType<IndicatorTitles>,
-    required: false,
-  },
-  overpassElementType: {
-    type: String as PropType<OverpassElementType | null>,
-    required: false,
+  selectedIndicator: {
+    type: Object as PropType<IndicatorsType | null>,
+    required: true,
   },
 })
 
@@ -47,7 +42,7 @@ const handleClick = (feature: Feature) => {
 function getSpaceTypeLabel(
   spaceType: LeisureType | LanduseType | NaturalType,
 ): GreenSpaceLabel | string {
-  const label = props.greenSpacesItem.find((item) => item.value === spaceType)?.labelKey
+  const label = props.greenSpacesItems?.find((item) => item.value === spaceType)?.labelKey
   return label ? label : 'Non défini'
 }
 </script>
@@ -57,7 +52,7 @@ function getSpaceTypeLabel(
     <div class="flex-1">
       <GMap
         :geoJsonData="props.geoJsonData"
-        :overpassElementType="props.overpassElementType"
+        :overpassElementType="props.selectedIndicator?.overpassElementType"
         :handleClic="(feature) => handleClick(feature)"
         :handleClicMultiPointsWithFeature="(item) => console.log(item)"
       />

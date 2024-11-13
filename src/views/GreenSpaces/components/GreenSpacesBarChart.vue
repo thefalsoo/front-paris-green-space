@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import GBarChart from '@/components/GBarChart/GBarChart.vue'
-import type { IndicatorValue } from '@/types/enums/indicators'
-import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
-import type { OverpassElement, OverpassResponse } from '@/types/interfaces/overpassResponse'
+import type { IndicatorValue } from '@/types/enums/indicatorsEnums'
+import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQueryEnums'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesInterfaces'
+import type {
+  OverpassElement,
+  OverpassResponse,
+} from '@/types/interfaces/overpassResponseInterfaces'
 import { ref, type PropType, watch } from 'vue'
 
 const props = defineProps({

@@ -7,9 +7,10 @@ import type { Feature, FeatureCollection } from 'geojson'
 import {
   formatGeoJsonToPointsTabWithFeature,
   type PointsTabWithFeature,
-} from '@/utils/formatGeoJson'
-import { options, type HexLayerIndexWithFeature } from '.'
-import { OverpassElementType } from '@/types/enums/overpassResponse'
+} from '@/utils/formatGeoJsonUtility'
+import { OverpassElementType } from '@/types/enums/overpassResponseEnums'
+import { hexbinLayerConfig } from '@/constants/hexbinLayerConfig'
+import type { HexLayerIndexWithFeature } from '@/types/interfaces/mapInterfaces'
 const props = defineProps({
   geoJsonData: {
     type: Object as PropType<FeatureCollection | null>,
@@ -55,7 +56,7 @@ const addGeoJsonLayer = (geoJsonData: FeatureCollection) => {
     case OverpassElementType.NODE: {
       const data: PointsTabWithFeature[] = formatGeoJsonToPointsTabWithFeature(geoJsonData)
       const hexLayer = L.hexbinLayer({
-        ...options,
+        ...hexbinLayerConfig,
         duration: 200,
       }).hoverHandler(
         L.HexbinHoverHandler.compound({

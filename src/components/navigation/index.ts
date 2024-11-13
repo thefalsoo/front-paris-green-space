@@ -1,7 +1,7 @@
 import { RoutePaths, RouteTitles } from '@/router/router'
-import { IconNamesPrime } from '@/types/enums/iconNames'
+import { IconNamesPrime } from '@/types/enums/iconNamesEnums'
 import { RouteNames } from '@/types/enums/routes'
-import type { MenuItems } from '@/types/interfaces/navigation'
+import type { MenuItems } from '@/types/interfaces/navigationInterfaces'
 
 export const menuItems: MenuItems[] = [
   {

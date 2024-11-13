@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 import type { PropType } from 'vue'
-import type { ButtonSeverity } from '../../types/enums/gButton'
-import type { IconNamesPrime } from '@/types/enums/iconNames'
+import type { ButtonSeverity } from '../../types/enums/gButtonEnums'
+import type { IconNamesPrime } from '@/types/enums/iconNamesEnums'
 
 const props = defineProps({
   title: {

@@ -1,8 +1,8 @@
-import type { SwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
-import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQuery'
-import type { QueryParams } from '@/types/interfaces/overpassQuery'
+import type { GSwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
+import { LanduseType, LeisureType, NaturalType } from '@/types/enums/overpassQueryEnums'
+import type { QueryParams } from '@/types/interfaces/overpassQueryInterfaces'
 
-export function generateQueryParamsFromFilters(item: SwitchItems[]): QueryParams {
+export function generateQueryParamsFromFilters(item: GSwitchItems[]): QueryParams {
   const queryParams: QueryParams = {
     leisureTypes: [],
     landuseTypes: [],

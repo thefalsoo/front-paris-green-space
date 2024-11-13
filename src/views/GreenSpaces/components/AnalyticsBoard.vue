@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import GreenSpacesBarChart from '@/components/GreenSpacesBarChart.vue'
-import type { IndicatorValue } from '@/types/enums/indicators'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpaces'
-import type { OverpassResponse } from '@/types/interfaces/overpassResponse'
+import GreenSpacesBarChart from '@/views/GreenSpaces/components/GreenSpacesBarChart.vue'
+import type { IndicatorValue } from '@/types/enums/indicatorsEnums'
+import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesInterfaces'
+import type { OverpassResponse } from '@/types/interfaces/overpassResponseInterfaces'
 import { type PropType } from 'vue'
 
 const props = defineProps({
