@@ -1,4 +1,4 @@
-import type { IconNamesPrime } from '../enums/iconNames'
+import type { IconNamesPrime } from '../enums/iconNamesEnums'
 
 export interface MenuItems {
   titleKey: string

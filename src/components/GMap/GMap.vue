@@ -7,9 +7,12 @@ import type { Feature, FeatureCollection } from 'geojson'
 import {
   formatGeoJsonToPointsTabWithFeature,
   type PointsTabWithFeature,
-} from '@/utils/formatGeoJson'
-import { options, type HexLayerIndexWithFeature } from '.'
-import { OverpassElementType } from '@/types/enums/overpassResponse'
+} from '@/utils/formatGeoJsonUtility'
+import { OverpassElementType } from '@/types/enums/overpassResponseEnums'
+import { hexbinLayerConfig } from '@/constants/hexbinLayerConfig'
+import type { HexLayerIndexWithFeature } from '@/types/interfaces/mapInterfaces'
+import ProgressSpinner from 'primevue/progressspinner'
+
 const props = defineProps({
   geoJsonData: {
     type: Object as PropType<FeatureCollection | null>,
@@ -26,6 +29,10 @@ const props = defineProps({
   handleClicMultiPointsWithFeature: {
     type: Function as PropType<(feature: HexLayerIndexWithFeature[]) => void>,
     required: true,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -55,7 +62,7 @@ const addGeoJsonLayer = (geoJsonData: FeatureCollection) => {
     case OverpassElementType.NODE: {
       const data: PointsTabWithFeature[] = formatGeoJsonToPointsTabWithFeature(geoJsonData)
       const hexLayer = L.hexbinLayer({
-        ...options,
+        ...hexbinLayerConfig,
         duration: 200,
       }).hoverHandler(
         L.HexbinHoverHandler.compound({
@@ -65,9 +72,14 @@ const addGeoJsonLayer = (geoJsonData: FeatureCollection) => {
               tooltipContent: function (d) {
                 const itemCount = d.length
 
-                return `<div class="bg-white border border-gray-300 rounded-lg shadow-lg p-2 text-center">
-                          <p class="text-lg font-bold text-blue-500">${itemCount} éléments</p>
-                        </div>`
+                return `
+        <div class="relative bg-gray-800 text-white p-2 rounded-lg shadow-lg text-center">
+          <p class="font-bold text-green">${itemCount} Arbres</p>
+
+          <!-- Triangle pointer -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 bottom-[-10px] w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-transparent border-t-gray-800"></div>
+        </div>
+      `
               },
             }),
           ],
@@ -137,13 +149,34 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="mapContainer" id="map" class="map-container"></div>
+  <div class="mapWithLoader">
+    <div ref="mapContainer" id="map" class="map-container relative"></div>
+    <div
+      v-if="props.loading"
+      class="absolute top-12 right-1 transform -translate-x-1/2 -translate-y-1/2 z-10"
+    >
+      <ProgressSpinner
+        style="width: 50px; height: 50px"
+        strokeWidth="8"
+        fill="transparent"
+        animationDuration=".5s"
+        aria-label="Custom ProgressSpinner"
+      />
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.mapWithLoader {
+  width: 100%;
+  height: 50vh;
+  z-index: 1;
+  position: relative;
+}
 #map {
   width: 100%;
-  height: 500px;
+  height: 100%;
+  z-index: 1;
   border-radius: 10px;
 }
 

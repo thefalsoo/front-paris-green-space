@@ -1,6 +1,6 @@
-import type { QueryParams } from '@/types/interfaces/overpassQuery'
-import type { OverpassResponse } from '@/types/interfaces/overpassResponse'
-import { generateOverpassQuery } from '@/utils/generateOverpassQuery'
+import type { QueryParams } from '@/types/interfaces/overpassQueryInterfaces'
+import type { OverpassResponse } from '@/types/interfaces/overpassResponseInterfaces'
+import { generateOverpassQuery } from '@/utils/generateOverpassQueryUtility'
 import axios from 'axios'
 
 const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'

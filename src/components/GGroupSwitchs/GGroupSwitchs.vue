@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { ref, defineProps, watch, type PropType } from 'vue'
 import ToggleSwitch from 'primevue/toggleswitch'
+import type { IconNamesMaterial } from '@/types/enums/iconNamesEnums'
+import GIcon from '../GIcon/GIcon.vue'
 
-export interface SwitchItems {
+export interface GSwitchItems {
   label: string
   value: string
   checked: boolean
   color?: string
+  iconNames?: IconNamesMaterial
 }
 
 const props = defineProps({
   items: {
-    type: Array as PropType<SwitchItems[]>,
+    type: Array as PropType<GSwitchItems[]>,
     required: true,
   },
   handleChangeSwitchs: {
-    type: Function as PropType<(params: SwitchItems[]) => void>,
+    type: Function as PropType<(params: GSwitchItems[]) => void>,
     required: true,
   },
   showLegend: {
@@ -28,7 +31,7 @@ const props = defineProps({
   },
 })
 
-const switchs = ref<SwitchItems[]>(props.items)
+const switchs = ref<GSwitchItems[]>(props.items)
 
 watch(
   switchs,
@@ -38,7 +41,7 @@ watch(
   { deep: true },
 )
 
-function toggleSwitch(item: SwitchItems) {
+function toggleSwitch(item: GSwitchItems) {
   if (!props.loading) {
     item.checked = !item.checked
   }
@@ -46,27 +49,43 @@ function toggleSwitch(item: SwitchItems) {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <div
-      v-for="options in switchs"
-      :key="options.value"
-      class="flex items-center space-x-4 cursor-pointer"
-    >
+  <div
+    v-for="options in switchs"
+    :key="options.value"
+    class="flex items-center space-x-4 max-w-max"
+  >
+    <div v-if="options.iconNames">
+      <GIcon :name="options.iconNames" color="white" />
+    </div>
+
+    <div>
       <ToggleSwitch v-model="options.checked" :id="options.value" :disabled="props.loading" />
-      <div class="flex items-center space-x-4" @click="toggleSwitch(options)">
+    </div>
+
+    <div class="flex items-center space-x-4 cursor-pointer" @click="toggleSwitch(options)">
+      <div v-if="props.showLegend">
         <div
-          v-if="props.showLegend"
           :style="{ backgroundColor: options.color || '#ccc' }"
           class="w-4 h-4 rounded-full"
         ></div>
-
-        <label
-          :for="options.value"
-          class="text-lg font-medium text-gray-800 cursor-pointer transition-colors duration-150 hover:text-blue-500 active:scale-95"
-        >
-          {{ options.label }}
-        </label>
       </div>
+
+      <label
+        :for="options.value"
+        class="text-md font-medium text-white whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer"
+      >
+        {{ options.label }}
+      </label>
     </div>
   </div>
 </template>
+
+<style scoped>
+.text-ellipsis {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

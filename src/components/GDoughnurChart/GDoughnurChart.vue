@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, defineProps, watch, type PropType } from 'vue'
+import { defineProps, onMounted, ref, watch, type PropType } from 'vue'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import Chart from 'primevue/chart'
-import ProgressSpinner from 'primevue/progressspinner'
+import ProgressSpinner from 'primevue/progressspinner';
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const props = defineProps({
   title: {
@@ -45,29 +48,13 @@ const setChartData = () => {
     ],
   }
 }
-
 const setChartOptions = () => {
   return {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        display: false,
-      },
-      y: {
         display: true,
-        beginAtZero: true,
-        ticks: {
-          color: '#ffffff',
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.2)',
-        },
       },
     },
   }
@@ -95,7 +82,9 @@ watch(
       />
     </div>
     <div v-else class="h-full w-full">
-      <Chart type="bar" :data="chartData" :options="chartOptions" class="h-full w-full" />
+      <Chart type="doughnut" :data="chartData" :options="chartOptions" class="h-full w-full" />
     </div>
   </div>
 </template>
+
+<style scoped></style>

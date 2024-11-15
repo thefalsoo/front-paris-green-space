@@ -1,4 +1,4 @@
-export enum OverpassElementType {
+export enum OverpassFeatureType {
   LEISURE = 'leisure',
   LANDUSE = 'landuse',
   NATURAL = 'natural',

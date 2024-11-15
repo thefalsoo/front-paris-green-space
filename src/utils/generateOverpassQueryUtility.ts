@@ -1,5 +1,5 @@
-import { OverpassElementType } from '@/types/enums/overpassQuery'
-import type { QueryParams } from '@/types/interfaces/overpassQuery'
+import { OverpassFeatureType } from '@/types/enums/overpassQueryEnums'
+import type { QueryParams } from '@/types/interfaces/overpassQueryInterfaces'
 
 export function generateOverpassQuery(params: QueryParams): string {
   const { leisureTypes = [], landuseTypes = [], naturalTypes = [] } = params
@@ -8,7 +8,7 @@ export function generateOverpassQuery(params: QueryParams): string {
     ? leisureTypes
         .map(
           (type) =>
-            `way["${OverpassElementType.LEISURE}"~"${type}"](area.searchArea); relation["${OverpassElementType.LEISURE}"~"${type}"](area.searchArea);`,
+            `way["${OverpassFeatureType.LEISURE}"~"${type}"](area.searchArea); relation["${OverpassFeatureType.LEISURE}"~"${type}"](area.searchArea);`,
         )
         .join(' ')
     : ''
@@ -17,7 +17,7 @@ export function generateOverpassQuery(params: QueryParams): string {
     ? landuseTypes
         .map(
           (type) =>
-            `way["${OverpassElementType.LANDUSE}"="${type}"](area.searchArea); relation["${OverpassElementType.LANDUSE}"="${type}"](area.searchArea);`,
+            `way["${OverpassFeatureType.LANDUSE}"="${type}"](area.searchArea); relation["${OverpassFeatureType.LANDUSE}"="${type}"](area.searchArea);`,
         )
         .join(' ')
     : ''
@@ -26,7 +26,7 @@ export function generateOverpassQuery(params: QueryParams): string {
     ? naturalTypes
         .map(
           (type) =>
-            `way["${OverpassElementType.NATURAL}"="${type}"](area.searchArea); relation["${OverpassElementType.NATURAL}"="${type}"](area.searchArea);`,
+            `way["${OverpassFeatureType.NATURAL}"="${type}"](area.searchArea); relation["${OverpassFeatureType.NATURAL}"="${type}"](area.searchArea);`,
         )
         .join(' ')
     : ''

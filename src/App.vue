@@ -5,19 +5,14 @@ import GHeader from './components/GHeader/GHeader.vue'
 </script>
 
 <template>
-  <div class="flex h-screen flex-row">
-    <!-- Sidebar -->
-    <aside class="bg-gray-800 text-white">
+  <div class="flex md:h-screen flex-row bg-black">
+    <aside class="bg-gray-800 text-white fixed top-0 left-0 h-full z-10">
       <NavigationMenu />
     </aside>
 
-    <!-- Main content -->
     <main class="flex-1 flex flex-col">
-      <!-- Fixed Header -->
       <GHeader class="fixed top-0 left-16 w-full z-10" />
-
-      <!-- Content Area below the Header -->
-      <div class="flex-1 bg-black pt-24 pb-8 pl-8 pr-8 overflow-hidden">
+      <div class="w-full h-full pt-24 pb-8 pl-32 pr-8">
         <RouterView />
       </div>
     </main>
