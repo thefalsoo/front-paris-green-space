@@ -17,12 +17,14 @@ import type { GSelectItem } from '@/components/GSelect/GSelect.vue'
 import { indicators } from '@/constants/indicators'
 import type { GSwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
 import MapAndAnalytics from './MapAndAnalytics.vue'
+import { palette } from '@/constants/palette'
 
 const filter: GSwitchItems[] = greenSpacesItems.map((item) => ({
   label: item.labelKey,
   value: item.value,
   checked: false,
   color: item.color,
+  iconNames: item.icon,
 }))
 
 const overpassResponse = ref<OverpassResponse | null>(null)
@@ -53,6 +55,8 @@ async function loadData() {
     switch (indicatorValue) {
       case IndicatorValue.TREES:
         data = await getTrees()
+        console.log('data', data)
+
         geoJson.value = formatTreesToGeoJson(data)
         break
       case IndicatorValue.GREEN_SPACES:
@@ -91,9 +95,9 @@ async function handleChangeFiltersGreenSpaces(item: GSwitchItems[]) {
 </script>
 
 <template>
-  <div class="flex flex-row h-full w-full gap-4">
-    <div class="flex flex-col w-1/6 h-full">
-      <Card class="h-full">
+  <div class="flex flex-col md:flex-row h-full gap-4">
+    <div class="flex flex-col w-full md:w-1/6">
+      <Card class="h-full" :style="{ backgroundColor: palette.dark }">
         <template #content>
           <IndicatorAndFilter
             :selectedIndicator="selectedIndicator"
@@ -107,11 +111,10 @@ async function handleChangeFiltersGreenSpaces(item: GSwitchItems[]) {
       </Card>
     </div>
 
-    <div class="flex flex-col w-5/6 h-full">
-      <Card class="h-full">
+    <div class="flex flex-col w-full md:w-5/6">
+      <Card class="h-full" :style="{ backgroundColor: palette.dark }">
         <template #content>
           <MapAndAnalytics
-            :greenSpacesItems="greenSpacesItems"
             :selectedIndicator="selectedIndicator"
             :geoJsonData="geoJson"
             :overpassResponse="overpassResponse"

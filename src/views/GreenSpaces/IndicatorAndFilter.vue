@@ -38,7 +38,7 @@ const props = defineProps({
 <template>
   <div class="space-y-4">
     <div class="space-y-4">
-      <p class="text-lg font-bold">Indicateurs</p>
+      <p class="text-lg font-bold text-white">Indicateurs</p>
       <GSelect
         :options="props.optionsIndicators"
         placeholder="Sélectionner un indicateur"
@@ -48,13 +48,16 @@ const props = defineProps({
     </div>
 
     <div v-if="selectedIndicator?.value === IndicatorValue.GREEN_SPACES" class="space-y-4">
-      <p class="text-lg font-bold">Filtres les espaces verts</p>
-      <GGroupSwitchs
-        :items="props.filtersGreenSpaces"
-        :show-legend="true"
-        :loading="props.loading"
-        :handleChangeSwitchs="props.handleChangeFiltersGreenSpaces"
-      />
+      <p class="text-lg font-bold text-white">Filtres les espaces verts</p>
+      <div class="flex flex-wrap md:flex-col md:overflow-hidden space-y-2">
+        <GGroupSwitchs
+          :items="props.filtersGreenSpaces"
+          :show-legend="true"
+          :loading="props.loading"
+          maxWidthLabel="200px"
+          :handleChangeSwitchs="props.handleChangeFiltersGreenSpaces"
+        />
+      </div>
     </div>
   </div>
 </template>

@@ -1,41 +1,42 @@
 <script setup lang="ts">
-import GreenSpacesBarChart from '@/views/GreenSpaces/components/GreenSpacesBarChart.vue'
-import type { IndicatorValue } from '@/types/enums/indicatorsEnums'
-import type { GreenSpacesItem } from '@/types/interfaces/greenSpacesInterfaces'
+import GreenSpacesBarChart from '@/views/GreenSpaces/components/GreenSpacesCharts.vue'
 import type { OverpassResponse } from '@/types/interfaces/overpassResponseInterfaces'
 import { type PropType } from 'vue'
+import { greenSpacesItems } from '@/constants/greenSpaces'
+import type { IndicatorsType } from '@/types/interfaces/indicatorsInterfaces'
+import { IndicatorValue } from '@/types/enums/indicatorsEnums'
+import TreesCharts from './TreesCharts.vue'
 
 const props = defineProps({
   overpassData: {
     type: Object as PropType<OverpassResponse | null>,
     required: false,
   },
-  greenSpacesItem: {
-    type: Array as PropType<GreenSpacesItem[]>,
-    required: true,
-  },
   loading: {
     type: Boolean,
     required: false,
     default: false,
   },
-  indicatorsTypeValue: {
-    type: String as PropType<IndicatorValue>,
-    required: false,
+  selectedIndicator: {
+    type: Object as PropType<IndicatorsType | null>,
+    required: true,
   },
 })
 </script>
 
 <template>
-  <div class="flex flex-col h-screen space-y-4 p-4">
-    <p class="text-xl font-semibold">Statistiques</p>
-    <div class="flex flex-row justify-start">
-      <GreenSpacesBarChart
-        :overpassData="props.overpassData"
-        :greenSpacesItem="props.greenSpacesItem"
-        :loading="loading"
-        :indicatorsTypeValue="indicatorsTypeValue"
-      />
-    </div>
+  <div v-if="selectedIndicator?.value == IndicatorValue.GREEN_SPACES" class="flex w-full">
+    <GreenSpacesBarChart
+      :overpassData="props.overpassData"
+      :greenSpacesItem="greenSpacesItems"
+      :loading="loading"
+    />
+  </div>
+  <div v-if="selectedIndicator?.value == IndicatorValue.TREES" class="flex w-full">
+    <TreesCharts
+      :overpassData="props.overpassData"
+      :greenSpacesItem="greenSpacesItems"
+      :loading="loading"
+    />
   </div>
 </template>
