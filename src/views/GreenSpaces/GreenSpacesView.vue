@@ -38,6 +38,7 @@ const optionsIndicators = computed(() =>
     label: indicator.title,
     value: indicator.value,
     iconName: indicator.iconName,
+    disabled: indicator.disabledIndicator,
   })),
 )
 

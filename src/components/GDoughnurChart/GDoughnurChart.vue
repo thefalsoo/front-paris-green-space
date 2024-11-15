@@ -2,7 +2,7 @@
 import { defineProps, onMounted, ref, watch, type PropType } from 'vue'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import Chart from 'primevue/chart'
-import ProgressSpinner from 'primevue/progressspinner';
+import ProgressSpinner from 'primevue/progressspinner'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -54,7 +54,7 @@ const setChartOptions = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: true,
+        display: false,
       },
     },
   }

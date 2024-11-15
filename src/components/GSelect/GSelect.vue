@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { ref, type PropType, computed } from 'vue'
 import Select from 'primevue/select'
 import GIcon from '../GIcon/GIcon.vue'
 import type { IconNamesMaterial } from '@/types/enums/iconNamesEnums'
@@ -51,15 +51,21 @@ const selectedValue = ref<GSelectItem | null>(null)
 function handleChangeSelectValue() {
   if (selectedValue.value) {
     props.handleChange(selectedValue.value)
+  } else {
+    selectedValue.value = null
   }
 }
+
+const filteredOptions = computed(() => {
+  return props.options.filter((option) => !option.disabled)
+})
 </script>
 
 <template>
   <div>
     <Select
       v-model="selectedValue"
-      :options="props.options"
+      :options="filteredOptions"
       :optionLabel="props.optionLabel"
       :placeholder="props.placeholder"
       :loading="props.loading"
@@ -70,9 +76,15 @@ function handleChangeSelectValue() {
       @change="handleChangeSelectValue"
     >
       <template #option="options">
-        <div class="flex items-center">
+        <div
+          class="flex items-center"
+          :class="options.option.disabled ? 'text-gray-400 cursor-not-allowed' : undefined"
+        >
           <div v-if="options.option.iconName" class="mr-2">
-            <GIcon :name="options.option.iconName" />
+            <GIcon
+              :name="options.option.iconName"
+              :color="options.option.disabled ? 'text-gray-400' : undefined"
+            />
           </div>
           <div>{{ options.option.label }}</div>
         </div>
@@ -80,5 +92,3 @@ function handleChangeSelectValue() {
     </Select>
   </div>
 </template>
-
-<style scoped></style>

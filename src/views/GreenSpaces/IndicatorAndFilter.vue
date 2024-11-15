@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
+import { ref, type PropType } from 'vue'
 import GSelect, { type GSelectItem } from '@/components/GSelect/GSelect.vue'
 import { IndicatorValue } from '@/types/enums/indicatorsEnums'
 import GGroupSwitchs, { type GSwitchItems } from '@/components/GGroupSwitchs/GGroupSwitchs.vue'
 import type { IndicatorsType } from '@/types/interfaces/indicatorsInterfaces'
+import GButton from '@/components/GButton/GButton.vue'
+import { IconNamesPrime } from '@/types/enums/iconNamesEnums'
+import ImportModal from './components/modal/ImportModal.vue'
 
 const props = defineProps({
   optionsIndicators: {
@@ -33,6 +36,16 @@ const props = defineProps({
     required: true,
   },
 })
+
+const isModalVisible = ref(false)
+
+function openModalImport() {
+  isModalVisible.value = true
+}
+
+function closeModalImport() {
+  isModalVisible.value = false
+}
 </script>
 
 <template>
@@ -59,5 +72,16 @@ const props = defineProps({
         />
       </div>
     </div>
+
+    <div class="space-y-4">
+      <p class="text-lg font-bold text-white">Importer des données</p>
+      <GButton
+        title="Importer csv"
+        :iconName="IconNamesPrime.FILE_IMPORT"
+        :click="openModalImport"
+      />
+    </div>
   </div>
+
+  <ImportModal :isModalVisible="isModalVisible" :close="closeModalImport" />
 </template>
