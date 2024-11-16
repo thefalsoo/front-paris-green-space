@@ -6,6 +6,6 @@ const { t } = useI18n()
 
 <template>
   <main>
-    <p class="text-white">{{ t('navigation.home') }}</p>
+    <p class="text-white">{{ t('navigation.userParameters') }}</p>
   </main>
 </template>

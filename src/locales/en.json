@@ -1,0 +1,39 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "greenSpaces": "Tableau de bord",
+    "userParameters": "Paramètres utilisateurs"
+  },
+  "greenSpace": {
+    "PARK": "Parc",
+    "GARDEN": "Jardin",
+    "PLAYGROUND": "Aire de jeux",
+    "PITCH": "Terrain de sport",
+    "FOREST": "Forêt",
+    "WOOD": "Bois",
+    "NATURE_RESERVE": "Réserve naturelle"
+  },
+  "interface": {
+    "import": "Importer",
+    "close": "Fermer",
+    "indicators": "Indicateurs",
+    "selectIndicators": "Sélectionner un indicateur",
+    "filtersGreenSpaces": "Filtrer les espaces verts",
+    "importData": "Importer des données",
+    "importCsv": "Importer un fichier CSV",
+    "treeByGenus": "Arbres par genre",
+    "buildDate": "Date de construction",
+    "genus": "Espèces",
+    "area": "Surface",
+    "spaceType": "Type d'espace",
+    "circumference": "Circonférence",
+    "height": "Hauteur",
+    "foot": "Pieds",
+    "noProperties": "Aucune propriété disponible",
+    "spaceProperties": "Propriétés de l'espace",
+    "treeProperties": "Propriétés de l'arbre",
+    "numberOfGreenSpaces": "Nombre d'espaces verts",
+    "pourcentOfVegetation": "Pourcentage de surface végétale",
+    "trees": "Arbres"
+  }
+}
