@@ -101,7 +101,7 @@ const updateChartData = (count: Record<string, number>, areaByType: Record<strin
   <div class="flex flex-wrap w-full gap-4 overflow-hidden">
     <div class="flex-1 min-w-[300px] h-[300px]">
       <GBarChart
-        title="Nombre d'espaces verts"
+        :title="$t('interface.numberOfGreenSpaces')"
         :labels="labels"
         :data="counts"
         :colors="colors"
@@ -110,7 +110,7 @@ const updateChartData = (count: Record<string, number>, areaByType: Record<strin
     </div>
     <div class="flex-1 min-w-[300px] h-[300px]">
       <GDoughnurChart
-        title="Pourcentage de végétation en m²"
+        :title="$t('interface.pourcentOfVegetation')"
         :labels="labels"
         :data="areas"
         :colors="colors"

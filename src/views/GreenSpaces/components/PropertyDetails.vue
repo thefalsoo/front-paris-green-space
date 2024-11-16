@@ -8,6 +8,7 @@ import { calculatePolygonArea } from '@/utils/areaUtility'
 import type { IndicatorsType } from '@/types/interfaces/indicatorsInterfaces'
 import { OverpassElementType } from '@/types/enums/overpassResponseEnums'
 import { IndicatorValue } from '@/types/enums/indicatorsEnums'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   itemFeature: {
@@ -64,11 +65,12 @@ const hasProperties = computed(() =>
       itemProperties.value.height,
   ),
 )
+const { t } = useI18n()
 
 const propertyTitle = computed(() =>
   props.selectedIndicator?.value === IndicatorValue.GREEN_SPACES
-    ? "Propriétés de l'espace"
-    : "Propriétés de l'arbre",
+    ? t('interface.spaceProperties')
+    : t('interface.treeProperties'),
 )
 </script>
 
@@ -79,23 +81,27 @@ const propertyTitle = computed(() =>
     <div v-if="hasProperties">
       <p v-if="itemProperties.name" class="text-white">Nom : {{ itemProperties.name }}</p>
       <p v-if="itemProperties.start_date" class="text-white">
-        Date de construction : {{ itemProperties.start_date }}
+        {{ $t('interface.buildDate') }} : {{ itemProperties.start_date }}
       </p>
       <p v-if="itemProperties.space_type" class="text-white">
-        Type d'espace : {{ getLabelByFeatureType(itemProperties.space_type) }}
+        {{ $t('interface.spaceType') }} : {{ getLabelByFeatureType(itemProperties.space_type) }}
       </p>
-      <p v-if="formattedSurface" class="text-white">Surface : {{ formattedSurface }} m²</p>
-      <p v-if="itemProperties.genus" class="text-white">Espèces : {{ itemProperties.genus }}</p>
+      <p v-if="formattedSurface" class="text-white">
+        {{ $t('interface.area') }} : {{ formattedSurface }} m²
+      </p>
+      <p v-if="itemProperties.genus" class="text-white">
+        {{ $t('interface.genus') }} : {{ itemProperties.genus }}
+      </p>
       <p v-if="itemProperties.circumference" class="text-white">
-        Circonférence : {{ itemProperties.circumference }} m
+        {{ $t('interface.circumference') }} : {{ itemProperties.circumference }} m
       </p>
       <p v-if="itemProperties.height" class="text-white">
-        Hauteur : {{ itemProperties.height }} pieds
+        {{ $t('interface.height') }} : {{ itemProperties.height }} {{ $t('interface.foot') }}
       </p>
     </div>
 
     <div v-else>
-      <p class="text-white">Aucune propriété disponible</p>
+      <p class="text-white">{{ $t('interface.noProperties') }}</p>
     </div>
   </div>
 </template>

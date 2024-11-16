@@ -35,6 +35,7 @@ const props = defineProps({
 
 <template>
   <Button
+    :label="props.title"
     v-tooltip.right="{
       value: tooltipText,
     }"
