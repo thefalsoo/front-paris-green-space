@@ -5,9 +5,6 @@ import axios from 'axios'
 
 const OVERPASS_URL = 'https://overpass-api.de/api/interpreter'
 
-/**
- * Requête Overpass pour obtenir les espaces verts à Paris.
- */
 export const getGreenSpaces = async (params: QueryParams): Promise<OverpassResponse> => {
   const query = generateOverpassQuery(params)
 
@@ -24,9 +21,6 @@ export const getGreenSpaces = async (params: QueryParams): Promise<OverpassRespo
   }
 }
 
-/**
- * Requête Overpass pour obtenir les arbres à Paris.
- */
 export const getTrees = async (): Promise<OverpassResponse> => {
   const query = `
     [out:json];

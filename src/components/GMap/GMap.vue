@@ -12,6 +12,7 @@ import { OverpassElementType } from '@/types/enums/overpassResponseEnums'
 import { hexbinLayerConfig } from '@/constants/hexbinLayerConfig'
 import type { HexLayerIndexWithFeature } from '@/types/interfaces/mapInterfaces'
 import ProgressSpinner from 'primevue/progressspinner'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   geoJsonData: {
@@ -40,6 +41,7 @@ const mapContainer = ref<HTMLElement | null>(null)
 let map: L.Map | null = null
 let currentLayer: L.Layer | null = null
 
+const { t } = useI18n()
 const initMap = async () => {
   if (!mapContainer.value) return
 
@@ -71,10 +73,10 @@ const addGeoJsonLayer = (geoJsonData: FeatureCollection) => {
             L.HexbinHoverHandler.tooltip({
               tooltipContent: function (d) {
                 const itemCount = d.length
-
+                const text = itemCount + ' ' + t('interface.trees')
                 return `
         <div class="relative bg-gray-800 text-white p-2 rounded-lg shadow-lg text-center">
-          <p class="font-bold text-green">${itemCount} Arbres</p>
+          <p class="font-bold text-green">${text}</p>
 
           <!-- Triangle pointer -->
           <div class="absolute left-1/2 transform -translate-x-1/2 bottom-[-10px] w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-transparent border-t-gray-800"></div>

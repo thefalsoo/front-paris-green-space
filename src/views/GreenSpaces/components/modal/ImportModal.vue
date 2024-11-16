@@ -39,12 +39,9 @@ function handleChangeIndicator(item: GSelectItem) {
     }
   }
 }
-function handleFileUpload(file: File) {
-  console.log(file)
-
+function handleFileUpload(file: File | null) {
   if (file) {
     uploadedFile.value = file
-    console.log(uploadedFile.value)
   }
 }
 </script>
@@ -54,22 +51,22 @@ function handleFileUpload(file: File) {
     :visible="props.isModalVisible"
     :show-header="false"
     modal
-    header="Importer des données"
+    :header="$t('interface.importData')"
     :style="{ width: '25rem', backgroundColor: palette.dark, border: 0 }"
   >
     <div class="flex flex-col justify-start space-y-4 p-4">
       <GSelect
         :options="optionsImportIndicators"
-        placeholder="Sélectionner un indicateur"
+        :placeholder="$t('interface.selectIndicators')"
         :handleChange="handleChangeIndicator"
       />
       <div v-if="selectedIndicator?.value">
-        <GFileUpload :handleUploadFile="(file: File) => handleFileUpload(file)" />
+        <GFileUpload :handleUploadFile="(file: File | null) => handleFileUpload(file)" />
       </div>
     </div>
     <div class="flex justify-end space-x-2">
-      <GButton title="Importer" :disabled="!uploadedFile" :click="props.close" />
-      <GButton title="Fermer" :click="props.close" />
+      <GButton :title="$t('interface.import')" :disabled="!uploadedFile" :click="props.close" />
+      <GButton :title="$t('interface.close')" :click="props.close" />
     </div>
   </Dialog>
 </template>

@@ -2,6 +2,9 @@
 import { ref, defineProps, type PropType } from 'vue'
 import FileUpload, { type FileUploadSelectEvent } from 'primevue/fileupload'
 import ProgressBar from 'primevue/progressbar'
+import GIcon from '../GIcon/GIcon.vue'
+import { palette } from '@/constants/palette'
+import { IconNamesMaterial } from '@/types/enums/iconNamesEnums'
 
 const props = defineProps({
   accept: {
@@ -13,7 +16,7 @@ const props = defineProps({
     default: 20000000,
   },
   handleUploadFile: {
-    type: Function as PropType<(file: File) => void>,
+    type: Function as PropType<(file: File | null) => void>,
     required: true,
   },
 })
@@ -57,6 +60,11 @@ function simulateUpload(file: File) {
 }
 
 const dropMessage = 'Glissez et déposez un fichier CSV ici ou cliquez pour en choisir un.'
+
+function deleteFile() {
+  uploadedFile.value = null
+  props.handleUploadFile(null)
+}
 </script>
 
 <template>
@@ -77,19 +85,28 @@ const dropMessage = 'Glissez et déposez un fichier CSV ici ou cliquez pour en c
       <template #empty>
         <div class="flex items-center justify-center flex-col">
           <i class="pi pi-cloud-upload !border-2 !rounded-full !p-8 !text-4xl !text-muted-color" />
-          <p class="mt-6 mb-0">
-            {{ uploadedFile ? uploadedFile.name : dropMessage }}
-          </p>
+          <div v-if="uploadedFile" class="flex mt-6 mb-0">
+            <div @click="deleteFile" class="cursor-pointer">
+              <GIcon :color="palette.green" :name="IconNamesMaterial.DELETE" />
+            </div>
+            {{ uploadedFile.name }}
+          </div>
+          <div v-else class="mt-6 mb-0">
+            {{ dropMessage }}
+          </div>
         </div>
       </template>
     </FileUpload>
 
-    <div v-if="uploadProgress > 0 && uploadProgress < 100" class="mt-4">
+    <div v-if="uploadProgress > 0 && uploadProgress < 100 && uploadedFile" class="mt-4">
       <ProgressBar :value="uploadProgress" />
       <p class="text-white mt-2 text-center">Progression : {{ uploadProgress }}%</p>
     </div>
 
-    <div v-else-if="uploadProgress === 100" class="text-white mt-4 text-center text-green-500">
+    <div
+      v-else-if="uploadProgress === 100 && uploadedFile"
+      class="text-white mt-4 text-center text-green-500"
+    >
       <p>Upload terminé !</p>
     </div>
   </div>

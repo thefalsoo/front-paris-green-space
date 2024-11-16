@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <template>
   <main>
-    <div>Parameters</div>
+    <p class="text-white">{{ t('navigation.userParameters') }}</p>
   </main>
 </template>

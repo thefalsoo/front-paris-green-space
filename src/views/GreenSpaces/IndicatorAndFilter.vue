@@ -51,17 +51,17 @@ function closeModalImport() {
 <template>
   <div class="space-y-4">
     <div class="space-y-4">
-      <p class="text-lg font-bold text-white">Indicateurs</p>
+      <p class="text-lg font-bold text-white">{{ $t('interface.indicators') }}</p>
       <GSelect
         :options="props.optionsIndicators"
-        placeholder="Sélectionner un indicateur"
+        :placeholder="$t('interface.selectIndicators')"
         :loading="props.loading"
         :handleChange="handleChangeIndicator"
       />
     </div>
 
     <div v-if="selectedIndicator?.value === IndicatorValue.GREEN_SPACES" class="space-y-4">
-      <p class="text-lg font-bold text-white">Filtres les espaces verts</p>
+      <p class="text-lg font-bold text-white">{{ $t('interface.filtersGreenSpaces') }}</p>
       <div class="flex flex-wrap md:flex-col md:overflow-hidden space-y-2">
         <GGroupSwitchs
           :items="props.filtersGreenSpaces"
@@ -74,9 +74,9 @@ function closeModalImport() {
     </div>
 
     <div class="space-y-4">
-      <p class="text-lg font-bold text-white">Importer des données</p>
+      <p class="text-lg font-bold text-white">{{ $t('interface.importData') }}</p>
       <GButton
-        title="Importer csv"
+        :title="$t('interface.importCsv')"
         :iconName="IconNamesPrime.FILE_IMPORT"
         :click="openModalImport"
       />

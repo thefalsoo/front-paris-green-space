@@ -15,4 +15,5 @@ export enum IconNamesMaterial {
   WOOD = 'material-symbols:park-outline',
   NATURE_RESERVE = 'material-symbols:emoji-nature-outline',
   HOT = 'material-symbols:device-thermostat',
+  DELETE = 'material-symbols:delete',
 }

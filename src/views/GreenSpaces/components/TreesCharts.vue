@@ -75,7 +75,7 @@ const getColorForGenus = (genus: string): string => {
   <div class="flex flex-wrap w-full gap-4 overflow-hidden">
     <div class="flex-1 min-w-[300px] h-[300px]">
       <GBarChart
-        title="Arbres par genre"
+        :title="$t('interface.treeByGenus')"
         :labels="labels"
         :data="counts"
         :colors="colors"
@@ -84,7 +84,7 @@ const getColorForGenus = (genus: string): string => {
     </div>
     <div class="flex-1 min-w-[300px] h-[300px]">
       <GBarChart
-        title="Arbres par genre"
+        :title="$t('interface.treeByGenus')"
         :labels="labels"
         :data="counts"
         :colors="colors"
